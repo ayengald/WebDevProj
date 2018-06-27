@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> SWE642-Abhishek </title>
+<script src="http://mason.gmu.edu/~syengald/testaccess/jquery.js" type="text/javascript"></script>
+<script src="http://mason.gmu.edu/~syengald/testaccess/jquery-ui.js" type="text/javascript"></script>
+<link rel="stylesheet" href="http://mason.gmu.edu/~syengald/testaccess/jquery-ui.css" type="text/css"/>
+<link rel="stylesheet" href="http://mason.gmu.edu/~syengald/testaccess/jquery-ui.theme.css" type="text/css"/>
+<script>
+		$(function()
+		{
+			$("#tabs").tabs();
+		});
+		function LoadSurvey()
+		{
+			$("#survey").html('<object data="http://mason.gmu.edu/~syengald/testaccess/survey.html" width="100%" height="535px">');
+		}
+</script>
+</head>
+<body>
+<div id="tabs">
+<ul>
+<li ><a href="http://mason.gmu.edu/~syengald/testaccess/home.html">Homepage</a></li>
+<li ><a href="http://mason.gmu.edu/~syengald/testaccess/CS.html">Homework2</a></li>
+<li onclick="LoadSurvey();"><a href="#survey">Homework3</a></li>
+</ul>
+<div id="survey" >
+
+</div>
+</div>
+</body>
+</html>

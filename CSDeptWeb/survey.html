@@ -1,0 +1,500 @@
+<html>
+<head title="Computer Science Department Survey">
+<script src="http://mason.gmu.edu/~syengald/testaccess/jquery.js" type="text/javascript"></script>
+<script src="http://mason.gmu.edu/~syengald/testaccess/jquery-ui.js" type="text/javascript"></script>
+<style type="text/css">
+body 
+{
+    background-color: #d3d3d3;
+}
+h1
+{
+	color: blue;
+	text-shadow: 2px 2px #ffff00;
+}
+img
+{
+	height: 150px;
+	width:150px;
+}
+.pop {
+	width:16%;
+	height:40px;
+	position:fixed;
+	bottom:18%;
+	right:0;
+    display:none;
+}
+</style>
+	<script>
+	$(function(){
+		$('.tooltip').hover(
+			function(){
+				$(this).next().show();
+			},
+			function(){
+				$(this).next().hide();   
+			}
+		)   
+	})
+	</script>
+<script type="text/javascript">	
+	function DataEval()
+	{
+		var inputstr = document.getElementById("data").value;
+		var numbers = inputstr.split(",");
+		var sum = 0;
+		var max= 0
+
+		if(numbers.length < 10)
+		{
+			alert("Enter atleast 10 numbers");
+		}
+		else
+		{
+			for(var i = 0; i < numbers.length; i++)
+			{	
+				
+				var current = parseFloat(numbers[i]);
+				if(current<1 || current>100)
+				{
+					sum=0;
+					current=0;
+					alert("enter values between 1 and 100")
+					break;
+				}
+				if(max<=current)
+					max=current;
+				sum = sum + current;
+			}
+			average = sum/(numbers.length);
+			document.getElementById("average").value=average;
+			document.getElementById("maximum").value=max;
+			
+		}
+	}
+
+	function ValidateForm()
+	{
+		var error = [];
+		var ElementFocus = [];
+	
+		var fname = document.getElementById("fname").value;
+		if(fname == "")
+		{
+			error.push("Please Enter First Name");
+			document.getElementById("fname").value = "";
+			ElementFocus.push("fname");
+		}
+		else if(!fname.match(/^[A-z]+$/))
+		{
+			error.push("First Name should contain only alphabets");
+			document.getElementById("fname").value = "";
+			ElementFocus.push("fname");		
+		}
+		
+		var lname = document.getElementById("lname").value;
+		if(lname == "")
+		{
+			error.push("Please Enter Last Name");
+			document.getElementById("lname").value = "";
+			ElementFocus.push("lname");
+		}
+		else if(!lname.match(/^[A-z]+$/))
+		{
+			error.push("Last Name should contain only alphabets");
+			document.getElementById("lname").value = "";
+			ElementFocus.push("lname");		
+		}
+	
+		var address = document.getElementById("addr").value;
+		if(address == "")
+		{
+			error.push("Please enter address");
+			document.getElementById("addr").value = "";
+			ElementFocus.push("addr");
+		}
+		else if(!address.match(/^[a-zA-Z\s\d]*$/i))
+		{
+			error.push("Address should contain alphanumeric characters");
+			document.getElementById("addr").value = "";
+			ElementFocus.push("addr");		
+		}
+
+		var city = document.getElementById("city").value;
+		if(!city.match(/^[A-z]+$/))
+		{
+			error.push("City should contain only alphabets");
+			document.getElementById("city").value = "";
+			ElementFocus.push("city");		
+		}
+		
+		var state = document.getElementById("state").value;
+		if(!state.match(/^[A-z]+$/))
+		{
+			error.push("State should contain only alphabets");
+			document.getElementById("state").value = "";
+			ElementFocus.push("state");		
+		}
+		
+		var pincode = document.getElementById("pincode").value;
+		if(pincode == "")
+		{
+			error.push("Please enter Pincode");
+			document.getElementById("pincode").value = "";
+			ElementFocus.push("pincode");
+		}
+		else if(!pincode.match(/^[0-9]+$/))
+		{
+			error.push("Pincode should contain only Numbers");
+			document.getElementById("pincode").value = "";
+			ElementFocus.push("pincode");		
+		}
+	
+		var email = document.getElementById("email").value
+		if (email == "")
+		{
+			error.push("please enter email");
+			document.getElementById("email").value = "";
+			ElementFocus.push("email");
+		}
+		else if(!email.match(/^[\_]*([a-z0-9]+(\.|\_*)?)+@([a-z][a-z0-9\-]+(\.|\-*\.))+[a-z]{2,6}$/))
+		{
+			error.push("The email entered is not valid");
+			document.getElementById("email").value = "";
+			ElementFocus.push("email");		
+		}
+
+		var elements = document.getElementsByTagName("input");
+		count_checkbox = 0;
+		for(var i =0; i<elements.length;i++)
+		{
+			if(elements[i].type === "checkbox" && elements[i].checked === true)
+			{
+				count_checkbox++;
+			}
+		
+		}
+		if(count_checkbox < 2)
+		{
+			error.push("Please choose atleast two options for 'What you like the most about the campus'");
+			ElementFocus.push("like");	
+		}
+		//var elements = document.getElementsByName("input");
+	
+		count_radiobutton =0;
+		for(var i =0; i<elements.length;i++)
+		{
+			if(elements[i].type === "radio" && elements[i].checked === true)
+			{
+				count_radiobutton++;
+			}
+		}
+		if(count_radiobutton < 1)
+		{
+			error.push("Please choose an option for 'What interested you in University'");
+			ElementFocus.push("interest");	
+		}
+		
+		var errorMessage = "";
+		if (error.length > 0)
+		{
+			for (var i = 0; i < error.length; i++)
+			{
+				errorMessage = errorMessage + error[i] + "\n";
+			}
+			var focusElement = ElementFocus[0];
+			document.getElementById(focusElement).focus();
+			alert(errorMessage);
+		}
+	}
+	
+	function pincodeData()
+	{
+		var xmlhttp;
+		var Url= "http://mason.gmu.edu/~syengald/Pincodes.json";
+		var pincodes1= document.getElementById("pincode").value;
+		if (window.XMLHttpRequest)
+		{
+			xmlhttp=new XMLHttpRequest();
+		}
+		else
+		{
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function()
+		{		
+			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+				var jc=JSON.parse(xmlhttp.responseText);
+				var flag=0;
+				for(var i=0; i<jc.pincodes.length; i++)
+				{
+					if(jc.pincodes[i].pincode == pincodes1)
+					{
+						flag=1;
+						break;
+					}
+				}
+				if(flag==1)
+				{
+					document.getElementById("city").value=jc.pincodes[i].city; 
+					document.getElementById("state").value=jc.pincodes[i].state;
+				}
+				else
+				{
+					alert("Invalid Pincode");
+					document.getElementById("pincode").value="";
+					document.getElementById("pincode").focus();
+					document.getElementById("pincodeError").value = "Invalid pincode, please choose a pincode among 22030, 22312, 22301, 20148"; 
+					document.getElementById("city").value = "";
+					document.getElementById("state").value = "";
+				}
+			}
+		}
+		xmlhttp.open( "GET",Url, true );
+		//xmlhttp.setRequestHeader("Accept","application/json; charset=utf-8" );
+		xmlhttp.send();
+	}
+
+</script>
+</head>
+<body>
+<h1 align='center'>Computer Science Department Survey Page</h1>
+<p align='right'>by Abhishek Yengaldas (G01010450)</p>
+<script type="text/javascript">
+
+	var now = new Date(); 
+	var hour = now.getHours(); 
+	var name;
+	if ( hour < 12 ) 
+		document.write( "<center><h2>Good Morning " );
+	else
+	{
+		hour = hour - 12; 
+		if ( hour < 6 )
+			document.write( "<center><h2>Good Afternoon " );
+		else
+			document.write( "<center><h2>Good Evening " );
+	}
+
+	if ( document.cookie )
+	{
+		var myCookie = unescape( document.cookie );
+		var cookieTokens = myCookie.split( "=" );
+		name = cookieTokens[ 1 ];
+	} 
+
+	else
+	{
+		name = window.prompt( "Please enter your name", "Abhishek" );
+		document.cookie = "name=" + escape( name );
+	}
+	document.writeln(name + ", Welcome to SWE 642 Assignment 3!</h2></center>" );
+	document.writeln( "<center><h3><a href='javascript:wrongPerson()'>" + "Click here if you are not "+name+ "</a></h3></center><hr>" );
+
+	function wrongPerson()
+	{
+		document.cookie= "name=null;"
+		location.reload();
+	} 
+
+</script>
+<br><br>
+<form name="survey" id="survey" method="post">
+            <center>
+            <table border="1" width="50%" cellpadding="5">
+                <thead>
+                <tr>
+                        <th colspan="2">Please fill in the fields given below to complete the survey</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>First Name<span style="color:red;">*</span></td>
+                        <td><input type="text" id="fname" name="fname" autocomplete="on" value="" placeholder="First Name" autofocus required/></td>
+                    </tr>
+                    <tr>
+                        <td>Last Name<span style="color:red;">*</span></td>
+                        <td><input type="text" id="lname" name="lname" autocomplete="on" value="" placeholder="Last Name" required/></td>
+                    </tr>
+                    <tr>
+                        <td>Email<span style="color:red;">*</span></td>
+                        <td><input type="email" id="email" name="email" autocomplete="on" placeholder="xxx@domain-name.com" value=""/></td>
+                    </tr>
+					<tr>
+                        <td>URL<span style="color:red;">*</span></td>
+                        <td><input type="text" id="URL" name="url" autocomplete="on" placeholder="" value=""/></td>
+                    </tr>
+                    <tr>
+                        <td>User Name<span style="color:red;">*</span></td>
+                        <td><input type="text" id="username" name="username" autocomplete="on" value="" placeholder="username" /></td>
+                    </tr>
+                    <tr>
+                    	<td>Date of Birth<span style="color:red;">*</span></td>
+                    	<td>
+                    	<select name="day" >
+                    	<option value="1">1</option>
+                    	<option value="2">2</option>
+                    	<option value="3">3</option>
+                    	<option value="4">4</option>
+                    	<option value="5">5</option>
+                    	<option value="6">6</option>
+                    	<option value="7">7</option>
+                    	<option value="8">8</option>
+                    	<option value="9">9</option>
+                    	<option value="10">10</option>
+                    	<option value="11">11</option>
+                    	<option value="12">12</option>
+                    	<option value="13">13</option>
+                    	<option value="14">14</option>
+                    	<option value="15">15</option>
+                    	<option value="16">16</option>
+                    	<option value="17">17</option>
+                    	<option value="18">18</option>
+                    	<option value="19">19</option>
+                    	<option value="20">20</option>
+                    	<option value="21">21</option>
+                    	<option value="22">22</option>
+                    	<option value="23">23</option>
+                    	<option value="24">24</option>
+                    	<option value="25">25</option>
+                    	<option value="26">26</option>
+                    	<option value="27">27</option>
+                    	<option value="28">28</option>
+                    	<option value="29">29</option>
+                    	<option value="30">30</option>
+                    	<option value="31">31</option>
+                    	</select>
+                    	<select name="month">
+                    	<option value="January">January</option>
+                    	<option value="February">Febuary</option>
+                    	<option value="March">March</option>
+                    	<option value="April">April</option>
+                    	<option value="May">May</option>
+                    	<option value="June">June</option>
+                    	<option value="July">July</option>
+                    	<option value="August">August</option>
+                    	<option value="September">September</option>
+                    	<option value="October">October</option>
+                    	<option value="November">November</option>
+                    	<option value="December">December</option>
+                    	</select>
+                    	<select	name="year">
+                    	<option value="1990">1990</option>
+                    	<option value="1991">1991</option>
+                    	<option value="1992">1992</option>
+                    	<option value="1993">1993</option>
+                    	<option value="1994">1994</option>
+                    	<option value="1995">1995</option>
+                    	<option value="1996">1996</option>
+                    	<option value="1997">1997</option>
+                    	<option value="1998">1998</option>
+                    	<option value="1999">1999</option>
+                    	<option value="2000">2000</option>
+                    	</select>
+                    </tr>
+                    <tr>
+                    	<td>Street Address<span style="color:red;">*</span></td>
+                    	<td><input type="text" id="addr" value="" name="addr" placeholder="Street Address" >
+                    </tr>
+					<tr>
+                    	<td>City<span style="color:red;">*</span></td>
+                    	<td><input type="text" id="city" value="" name="city" placeholder="City" >
+                    </tr>			                    
+                    <tr>
+                    	<td>State<span style="color:red;">*</span></td>
+                    	<td><input type="text" value="" id="state" name="state" placeholder="State" >
+                    </tr>			                    
+                    <tr>
+                    	<td>Pincode<span style="color:red;">*</span></td>
+                    	<td><input type="text" onblur="pincodeData()" value="" id="pincode" name="pincode" placeholder="Pincode" />
+						<span id="pincodeError" style="color:#F00"></span>
+					</tr>
+                    <tr>
+                    	<td>Phone Number<span style="color:red;">*</span></td>
+                    	<td><input type="text" value="" name="phoneno" placeholder="(XXX)-XXX-XXXX" >
+                    </tr>
+					<tr>
+						<td>High-School Graduation Month and Year</td>
+						<td>
+						<input list="months" name="months" placeholder="Month"/>
+						<datalist id="months"">
+							<option value="January">
+							<option value="February">
+							<option value="March">
+							<option value="April">
+							<option value="May">
+							<option value="June">
+							<option value="July">
+							<option value="August">
+							<option value="September">
+							<option value="October">
+							<option value="November">
+							<option value="December">
+							</datalist><input type="text" value="" style="width:50px" placeholder="Year"></td>
+					</tr>
+					<tr>
+						<td>What you like most about the campus?<br>(Select atleast 2 options)</br></td>
+						<td><input type="checkbox" id="like" name="like" value="students">Students<br>
+							<input type="checkbox" id="like" name="like" value="campus">Campus<br>
+							<input type="checkbox" id="like" name="like" value="location">Location<br>
+							<input type="checkbox" id="like" name="like" value="atmosphere">Atmosphere<br>
+							<input type="checkbox" id="like" name="like" value="dorm rooms">Dorm Rooms<br>
+							<input type="checkbox" id="like" name="like" value="sports">Sports<br>
+						</td>
+					</tr>
+					<tr>
+						<td>What interests you in the university?<br>(Select atleast 1 option)</br></td>
+						<td><input type="radio" id="interest" name="interest" value="friends">Friends<br>
+							<input type="radio" id="interest" name="interest" value="internet">Internet<br>
+							<input type="radio" id="interest" name="interest" value="television">Television<br>
+							<input type="radio" id="interest" name="interest" value="others">Others<br>
+						</td>
+					</tr>
+					<tr>
+						<td>Would you recommend this university to others?</td>
+						<td><select name="recommend">
+							<option value=""></option>
+							<option value="Very Likely">Very Likely</option>
+							<option value="Likely">Likely</option>
+							<option value="Unlikely">Unlikely</option>
+						</td>
+					<tr>
+						<td>Data<br>(enter atleast 10 values)</br></td>
+						<td><textarea onblur="DataEval()" id="data" value="" name="data" placeholder="Enter the numbers here"></textarea></td>
+					</tr>
+					<tr>
+						<td>Average</td>
+						<td><textarea id="average" rows="1" cols="50" value=""></textarea></td>
+					</tr>
+					<tr>
+						<td>Maximum</td>
+						<td><textarea id="maximum" rows="1" cols="50" value=""></textarea></td>
+					</tr>
+					<tr>
+						<td>For additional comments and feedback, enter here</td>
+						<td><textarea rows="4" cols="50"></textarea></td>
+					</tr>
+                        <td><input type="submit" name="submit" value="Submit" onclick="return ValidateForm()"/></td>
+                        <td><input type="reset" value="Reset" /></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+			<p>To go to CS department homepage, <a href="CS.html">click here</a></p>
+
+			<table width="100%">
+			<tr>
+			<td>
+				<a href="https://www2.gmu.edu/" style="position:fixed; bottom:0; right:0;">
+				<img class="tooltip" src="gmu.jpg"><div class="pop">Please visit http://www.gmu.edu for more information.</div>
+				</a>
+			</td>
+			</tr>
+			</table>
+			
+	
+</form>
+</body>
+</html>

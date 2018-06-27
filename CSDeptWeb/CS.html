@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Computer Science </title>
+<script src="http://mason.gmu.edu/~syengald/testaccess/jquery.js" type="text/javascript"></script>
+<script src="http://mason.gmu.edu/~syengald/testaccess/jquery-ui.js" type="text/javascript"></script>
+<script>
+$(function(){
+    $('.tooltip').hover(
+        function(){
+            $(this).next().show();
+        },
+        function(){
+            $(this).next().hide();   
+        }
+    )   
+})
+</script>
+<style>
+.pop {
+	width:16%;
+	height:40px;
+	position:fixed;
+	bottom:18%;
+	right:0;
+    display:none;
+}
+</style>
+</head>
+
+<body style="background-color:#b8b894;">
+<a href="https://www2.gmu.edu/" style="position:fixed; bottom:0; right:0;">
+<img class="tooltip" src="gmu.jpg"><div class="pop">Please visit http://www.gmu.edu for more information.</div>
+</a>
+<h1 style="text-align:center;color:blue; text-shadow: 2px 2px #0080ff;"> Department of Computer Science </h1>
+<h1 style="text-align:center;color:blue; text-shadow: 2px 2px #0080ff;"> George Mason University</h1>
+<pre style="font-size:20;"> <h2>	Welcome to the website of the Computer Science Department at George Mason University! With 50 faculty members, the CS Department at Mason is the largest department in the
+Volgenau School of Engineering, one of the largest departments on campus, and one of the largest CS departments in the Commonwealth of Virginia.
+	The department offers two Bachelor of Science programs with a total enrollment of over 1100 students:  the B.S. in Computer Science and the inter-disciplinary B.S.in
+Applied Computer Science; four M.S. programs in Computer Science, Information Systems, Information Security and Assurance, and Software Engineering with a total enrollment of 400
+students; and a Ph.D. program in Computer Science with over 100 students. The department's faculty also teach and participate in the inter-disciplinary M.S. in Data Analytics 
+Engineering and the Ph.D. in Information Technology offered by the Volgenau School of Engineering.</h2></pre>
+<h3> M.S.Degrees and their respective courses offer by the Computer Science department:</h3>
+<h4>
+<ul>
+<li>Computer Science
+<ol>
+<li>Analysis of Algorithms(CS 583)</li>
+<li>Introduction to Artificial Intelligence(CS 580)</li>
+<li>Data Mining and its applications(CS 584)</li>
+</ol>
+</li>
+<p>
+<li>Software Engineering
+<ol>
+<li>Software Engineering for the World Wide Web(SWE 642)</li>
+<li>Component-based Software Development(SWE 645)</li>
+<li>User Interface Design and Development(SWE 632)</li>
+</ol>
+<p>
+</li>
+<li>Information Systems
+<ol>
+<li>Database Management Systems(INFS 614)</li>
+<li>Web Search Engines and Recommender Systems(INFS 623)</li>
+<li>Intelligent Agents and Semantic Web(INFS )</li>
+</ol>
+<p>
+</li>
+<li>Information Security and Assurance
+<ol>
+<li>Network Security(ISA 656)</li>
+<li>Operating Systems Security(ISA 673)</li>
+<li>Secure Software Design(ISA 681)</li>
+</ol>
+</li>
+</ul>
+</h4>
+<p><h4><a href="survey.html">Click here</a> to go to the Survey Form</h4></p>
+</body>
+</html> 
